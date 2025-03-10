@@ -13,9 +13,10 @@ const Navbar = () => {
               href="#home" 
               className="inline-block text-gray-300 transition-all duration-300 
                          hover:text-white hover:scale-105 hover:font-bold relative
-                         after:content-[''] after:absolute after:left-0 after:bottom-0 
+                         after:content-[''] after:absolute after:left-1/2 after:bottom-0 
                          after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
-                         after:duration-300 hover:after:w-full hover:after:bg-white">
+                         after:duration-300 after:-translate-x-1/2
+                         hover:after:w-full hover:after:bg-white">
               Inicio
             </a>
           </li>
@@ -24,9 +25,10 @@ const Navbar = () => {
               href="#about" 
               className="inline-block text-gray-300 transition-all duration-300 
                          hover:text-white hover:scale-105 hover:font-bold relative
-                         after:content-[''] after:absolute after:left-0 after:bottom-0 
+                         after:content-[''] after:absolute after:left-1/2 after:bottom-0 
                          after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
-                         after:duration-300 hover:after:w-full hover:after:bg-white">
+                         after:duration-300 after:-translate-x-1/2
+                         hover:after:w-full hover:after:bg-white">
               Acerca
             </a>
           </li>
@@ -35,9 +37,10 @@ const Navbar = () => {
               href="#projects" 
               className="inline-block text-gray-300 transition-all duration-300 
                          hover:text-white hover:scale-105 hover:font-bold relative
-                         after:content-[''] after:absolute after:left-0 after:bottom-0 
+                         after:content-[''] after:absolute after:left-1/2 after:bottom-0 
                          after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
-                         after:duration-300 hover:after:w-full hover:after:bg-white">
+                         after:duration-300 after:-translate-x-1/2
+                         hover:after:w-full hover:after:bg-white">
               Proyectos
             </a>
           </li>
@@ -46,9 +49,10 @@ const Navbar = () => {
               href="#contact" 
               className="inline-block text-gray-300 transition-all duration-300 
                          hover:text-white hover:scale-105 hover:font-bold relative
-                         after:content-[''] after:absolute after:left-0 after:bottom-0 
+                         after:content-[''] after:absolute after:left-1/2 after:bottom-0 
                          after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
-                         after:duration-300 hover:after:w-full hover:after:bg-white">
+                         after:duration-300 after:-translate-x-1/2
+                         hover:after:w-full hover:after:bg-white">
               Contacto
             </a>
           </li>
