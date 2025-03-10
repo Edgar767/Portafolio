@@ -2,10 +2,11 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-4 left-4 right-4 mx-4 rounded-lg z-50 
+    <nav className="fixed top-4 inset-x-4 mx-auto rounded-lg z-50 
                    backdrop-blur-lg bg-gray-900/30 border border-gray-700/30
-                   shadow-lg shadow-black/30 hover:shadow-xl transition-shadow duration-300">
-      <div className="max-w-7xl mx-auto px-4 py-5 flex justify-center items-center">
+                   shadow-lg shadow-black/30 hover:shadow-xl transition-shadow duration-300
+                   max-w-2xl min-w-[400px] w-fit">
+      <div className="mx-auto px-8 py-5 flex justify-center items-center">
         <ul className="flex space-x-6">
           <li>
             <a 
