@@ -40,7 +40,7 @@ const Navbar = () => {
     <nav 
       ref={navRef}
       className="fixed top-4 inset-x-4 mx-auto rounded-lg z-50 
-                backdrop-blur-lg bg-gray-900/30 border border-gray-700/30
+                backdrop-blur-lg bg-gray-900/30 border border-gray-600/30
                 shadow-lg shadow-black/30 hover:shadow-xl
                 max-w-3xl min-w-[500px] w-fit overflow-hidden"
       onMouseMove={handleMouseMove}
