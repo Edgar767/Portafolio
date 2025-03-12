@@ -1,8 +1,14 @@
+import Hero from "./Hero";
+import Acerca from "./Acerca";
+import Proyectos from "./Proyectos";
+
 function Inicio() {
 
   return (
     <div>
-    <h1 className="text-4xl">Bienvenido a mi portafolio</h1>
+    <Hero />
+    <Acerca />
+    <Proyectos />
     </div>
   )
 }
