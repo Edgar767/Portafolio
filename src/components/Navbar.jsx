@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   HomeIcon as HomeOutline,
   UserIcon as UserOutline,
@@ -26,6 +26,21 @@ const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const handleMouseMove = (e) => {
     if (!navRef.current) return;
@@ -69,8 +84,8 @@ const Navbar = () => {
       </div>
 
       <div className="relative mx-auto px-6 py-6 flex justify-center items-center">
-        {/* Logo y Botón Hamburguesa para móvil */}
-        <div className="md:hidden absolute left-4 flex items-center space-x-4">
+        {/* Botón Hamburguesa a la izquierda */}
+        <div className="md:hidden absolute left-4">
           <button
             className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/30 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -81,6 +96,10 @@ const Navbar = () => {
               <Bars3Icon className="h-6 w-6" />
             )}
           </button>
+        </div>
+
+        {/* Logo a la derecha */}
+        <div className="md:hidden absolute right-4">
           <span className="text-white font-bold text-xl tracking-tighter">&lt;/&gt;</span>
         </div>
 
@@ -108,32 +127,31 @@ const Navbar = () => {
       </div>
 
       {/* Menú Móvil */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-gray-600/30 w-full">
-          <ul className="flex flex-col items-start py-6 space-y-6 pl-6">
-            {menuItems.map((item) => (
-              <li key={item.name} className="w-full">
-                <a
-                  href={item.href}
-                  className="group inline-flex items-center text-gray-300 transition-all duration-300 
-                             hover:text-white hover:scale-105 hover:font-bold relative
-                             after:content-[''] after:absolute after:left-1/2 after:bottom-0 
-                             after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
-                             after:duration-300 after:-translate-x-1/2
-                             hover:after:w-full hover:after:bg-white space-x-2 px-4 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <div className="relative h-[1em] w-[1em]">
-                    <item.OutlineIcon className="absolute inset-0 h-full w-full opacity-100 group-hover:opacity-0 transition-opacity" />
-                    <item.SolidIcon className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <span className="text-lg">{item.name}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className={`md:hidden border-t border-gray-600/30 w-full transition-all duration-300 ease-in-out 
+        ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+        <ul className="flex flex-col items-start py-6 space-y-6 pl-6">
+          {menuItems.map((item) => (
+            <li key={item.name} className="w-full">
+              <a
+                href={item.href}
+                className="group inline-flex items-center text-gray-300 transition-all duration-300 
+                           hover:text-white hover:scale-105 hover:font-bold relative
+                           after:content-[''] after:absolute after:left-1/2 after:bottom-0 
+                           after:h-[2px] after:w-0 after:bg-gray-300 after:transition-all 
+                           after:duration-300 after:-translate-x-1/2
+                           hover:after:w-full hover:after:bg-white space-x-2 px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="relative h-[1em] w-[1em]">
+                  <item.OutlineIcon className="absolute inset-0 h-full w-full opacity-100 group-hover:opacity-0 transition-opacity" />
+                  <item.SolidIcon className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <span className="text-lg">{item.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };
