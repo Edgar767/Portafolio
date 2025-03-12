@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Ancho del scrollbar */
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+    background: #1e1e1e;
+  }
+  
+  /* Fondo del track */
+  ::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 10px;
+    border: 0px solid #1e1e1e;
+  }
+  
+  /* Estilo del "thumb" */
+  ::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 10px;
+    border: 3px solid #1e1e1e;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* Cambio de color al hacer hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #505050; /* Un gris más claro al pasar el mouse */
+  }
+  
