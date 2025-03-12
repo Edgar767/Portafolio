@@ -48,11 +48,10 @@ const Navbar = () => {
   return (
     <nav 
       ref={navRef}
-      className="fixed top-4 inset-x-4 mx-auto rounded-lg z-50 
+      className="fixed top-4 left-4 right-4 mx-auto rounded-lg z-50 
                 backdrop-blur-lg bg-gray-900/30 border border-gray-600/30
                 shadow-lg shadow-black/30 hover:shadow-xl
-                max-w-3xl min-w-[500px] w-fit overflow-hidden
-                md:min-w-[500px]"
+                max-w-3xl md:min-w-[500px] w-[calc(100%-2rem)] md:w-fit overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -111,9 +110,9 @@ const Navbar = () => {
       {/* Menú Móvil */}
       {isMenuOpen && (
         <div className="md:hidden border-t border-gray-600/30 w-full">
-          <ul className="flex flex-col items-center py-6 space-y-6">
+          <ul className="flex flex-col items-start py-6 space-y-6 pl-6">
             {menuItems.map((item) => (
-              <li key={item.name}>
+              <li key={item.name} className="w-full">
                 <a
                   href={item.href}
                   className="group inline-flex items-center text-gray-300 transition-all duration-300 
