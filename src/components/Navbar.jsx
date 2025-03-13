@@ -25,6 +25,8 @@ const Navbar = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -41,6 +43,37 @@ const Navbar = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Make navbar visible when scrolling up
+      if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+        // Apply a small delay before any hiding to ensure rendering is complete
+        setTimeout(() => {
+          if (navRef.current) {
+            // Force a repaint to ensure text renders clearly
+            navRef.current.style.filter = 'blur(0)';
+          }
+        }, 50);
+      } 
+      // Hide navbar when scrolling down and not at the top
+      else if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+    
+    window.addEventListener('scroll', controlNavbar);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   const handleMouseMove = (e) => {
     if (!navRef.current) return;
@@ -59,14 +92,25 @@ const Navbar = () => {
     
     setIsHovered(isNear);
   };
+  
+  // Force render clarity when navbar becomes visible
+  useEffect(() => {
+    if (isVisible && navRef.current) {
+      // Force a reflow to ensure proper rendering
+      navRef.current.style.transform = 'translateZ(0)';
+    }
+  }, [isVisible]);
 
   return (
     <nav 
       ref={navRef}
-      className="fixed top-4 left-4 right-4 mx-auto rounded-lg z-50 
+      className={`fixed top-4 left-4 right-4 mx-auto rounded-lg z-50 
                 backdrop-blur-lg bg-gray-900/30 border border-gray-600/30
                 shadow-lg shadow-black/30 hover:shadow-xl
-                max-w-3xl md:min-w-[500px] w-[calc(100%-2rem)] md:w-fit overflow-hidden"
+                max-w-3xl md:min-w-[500px] w-[calc(100%-2rem)] md:w-fit overflow-hidden
+                transition-all duration-500 ease-in-out ${isVisible 
+                  ? 'md:opacity-100 md:translate-y-0 md:scale-x-100 md:backdrop-blur-lg' 
+                  : 'md:opacity-0 md:-translate-y-full md:scale-x-50 md:origin-center md:backdrop-blur-none'}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setIsHovered(false)}
     >
