@@ -64,6 +64,11 @@ const Navbar = () => {
         setIsVisible(false);
       }
       
+      // Keep the navbar visible if menu is open on mobile
+      if (isMenuOpen) {
+        setIsVisible(true);
+      }
+      
       setLastScrollY(currentScrollY);
     };
     
@@ -73,7 +78,7 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isMenuOpen]);
 
   const handleMouseMove = (e) => {
     if (!navRef.current) return;
@@ -109,8 +114,8 @@ const Navbar = () => {
                 shadow-lg shadow-black/30 hover:shadow-xl
                 max-w-3xl md:min-w-[500px] w-[calc(100%-2rem)] md:w-fit overflow-hidden
                 transition-all duration-500 ease-in-out ${isVisible 
-                  ? 'md:opacity-100 md:translate-y-0 md:scale-x-100 md:backdrop-blur-lg' 
-                  : 'md:opacity-0 md:-translate-y-full md:scale-x-50 md:origin-center md:backdrop-blur-none'}`}
+                  ? 'opacity-100 translate-y-0 md:scale-x-100 backdrop-blur-lg' 
+                  : 'opacity-0 -translate-y-full md:scale-x-50 md:origin-center backdrop-blur-none'}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -132,7 +137,10 @@ const Navbar = () => {
         <div className="md:hidden absolute left-4">
           <button
             className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/30 transition-colors"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => {
+              setIsMenuOpen(!isMenuOpen);
+              setIsVisible(true);
+            }}
           >
             {isMenuOpen ? (
               <XMarkIcon className="h-6 w-6" />
@@ -172,7 +180,8 @@ const Navbar = () => {
 
       {/* Menú Móvil */}
       <div className={`md:hidden border-t border-gray-600/30 w-full transition-all duration-300 ease-in-out 
-        ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+        ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
+        onClick={() => setIsVisible(true)}>
         <ul className="flex flex-col items-start py-6 space-y-6 pl-6">
           {menuItems.map((item) => (
             <li key={item.name} className="w-full">
