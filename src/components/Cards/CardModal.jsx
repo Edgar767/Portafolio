@@ -128,18 +128,18 @@ const CardModal = ({
                   )}
                 </motion.div>
 
-                {/* Información a la derecha - Ahora ocupa menos espacio */}
+                {/* Información a la derecha - Ahora con mejor centrado vertical */}
                 <motion.div className="w-2/4 flex flex-col h-full">
-                  <div className="flex-1">
+                  <div className="flex-1 flex flex-col justify-center">
                     <motion.h2 
                       layoutId="card-title"
-                      className="text-4xl font-bold mb-4 text-white"
+                      className="text-4xl font-bold mb-6 text-white"
                     >
                       {titulo}
                     </motion.h2>
                     <motion.p 
                       layoutId="card-description"
-                      className="text-xl mb-6 text-gray-300 leading-relaxed"
+                      className="text-xl mb-8 text-gray-300 leading-relaxed"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -147,16 +147,17 @@ const CardModal = ({
                     >
                       {descripcion}
                     </motion.p>
+                  </div>
 
-                    {/* Botones de GitHub y enlace externo */}
-                    {(githubUrl || externalUrl) && (
-                      <motion.div 
-                        className="flex gap-4 mb-8 justify-center"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{ delay: 0.4 }}
-                      >
+                  {/* Botones de GitHub y enlace externo - Separados del contenido centrado */}
+                  {(githubUrl || externalUrl) && (
+                    <motion.div 
+                      className="flex gap-4 justify-center mb-8"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ delay: 0.4 }}
+                    >
                         {githubUrl && (
                           <motion.a
                             href={githubUrl}
@@ -202,13 +203,14 @@ const CardModal = ({
                         )}
                       </motion.div>
                     )}
-                  </div>
 
-                  {/* Componente de tecnologías con carrusel infinito */}
+                  {/* Componente de tecnologías con carrusel infinito - Posicionado al final */}
                   {tecnologias.length > 0 && (
-                    <TechCarousel 
-                      tecnologias={tecnologias}
-                    />
+                    <div className="mt-auto">
+                      <TechCarousel 
+                        tecnologias={tecnologias}
+                      />
+                    </div>
                   )}
                 </motion.div>
 
