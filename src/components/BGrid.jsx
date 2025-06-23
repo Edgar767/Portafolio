@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DarkVoidGradient = () => {
+const BGrid = () => {
   return (
     <div className="w-full h-screen absolute top-0 left-0 z-[-1] overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a0a] to-[#1a1a1a]" />
@@ -21,4 +21,4 @@ const DarkVoidGradient = () => {
   );
 };
 
-export default DarkVoidGradient;
+export default BGrid;

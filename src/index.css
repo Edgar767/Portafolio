@@ -1,4 +1,31 @@
+@font-face {
+  font-family: 'Geo';
+  src: url("./assets/Fonts/Geo-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Goldman';
+  src: url("./assets/Fonts/Goldman-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'ZenDots';
+  src: url("./assets/Fonts/ZenDots-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Outfit';
+  src: url("./assets/Fonts/Outfit-Regular.ttf");
+}
+
 @import "tailwindcss";
+
+@theme{
+  --font-Geo: 'Geo';
+  --font-Goldman: 'Goldman';
+  --font-ZenDots: 'ZenDots';
+  --font-Outfit: 'Outfit';
+}
 
 /* Ancho del scrollbar */
 ::-webkit-scrollbar {
