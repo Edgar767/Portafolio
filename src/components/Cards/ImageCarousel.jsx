@@ -80,7 +80,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
             <img
               src={image.url}
               alt={image.alt}
-              className="w-full h-full object-contain rounded"
+              className="w-full h-full object-contain rounded-3xl"
               loading={index === 0 ? "eager" : "lazy"}
             />
           </div>
@@ -96,7 +96,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
 
       {/* Navigation - Centrado verticalmente en el espacio reservado */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 left-0 right-0 h-1/6 flex items-center justify-center">
+        <div className="absolute bottom-0 left-0 right-0 h-1/6 flex items-center justify-center pt-5">
           <div className="flex items-center gap-3 px-4 py-2 bg-gray-900/80 backdrop-blur-sm rounded-full border border-gray-600/50">
             {/* Previous Arrow */}
             <button
