@@ -80,7 +80,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
             <img
               src={image.url}
               alt={image.alt}
-              className="w-full h-full object-contain rounded-3xl"
+              className="w-full h-full object-contain"
               loading={index === 0 ? "eager" : "lazy"}
             />
           </div>
