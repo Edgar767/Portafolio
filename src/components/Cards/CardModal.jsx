@@ -182,11 +182,17 @@ const CardModal = ({
                             href={externalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-3 bg-white border border-white/10 px-6 py-3 rounded-full hover: transition-all duration-300"
+                            className="flex items-center gap-3 bg-white border border-white/10 px-6 py-3 rounded-full 
+                                     hover:bg-indigo-400 hover:border-indigo-400 hover:shadow-2xl 
+                                     hover:shadow-indigo-500/60 hover:ring-8 hover:ring-indigo-500/50 
+                                     transition-all duration-300 group relative overflow-hidden"
                             whileTap={{ scale: 0.95 }}
+                            whileHover={{ 
+                              boxShadow: "0 0 40px rgba(99, 102, 241, 0.6), 0 0 80px rgba(99, 102, 241, 0.3)"
+                            }}
                           >
                             <svg 
-                              className="w-5 h-5 text-black"
+                              className="w-5 h-5 text-black group-hover:text-white transition-colors duration-300 relative z-10"
                               fill="none" 
                               stroke="currentColor" 
                               viewBox="0 0 24 24"
@@ -198,7 +204,7 @@ const CardModal = ({
                                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
                               />
                             </svg>
-                            <span className="text-black font-medium">Visitar</span>
+                            <span className="text-black group-hover:text-white font-medium transition-colors duration-300 relative z-10">Visitar</span>
                           </motion.a>
                         )}
                       </motion.div>
@@ -216,7 +222,7 @@ const CardModal = ({
 
                 {/* Botón de cerrar */}
                 <motion.button
-                  className="absolute top-4 right-4 text-4xl text-gray-400 hover:text-white transition-colors"
+                  className="absolute top-1 right-4 text-5xl text-gray-400 hover:text-white transition-colors"
                   onClick={handleCloseModal}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
