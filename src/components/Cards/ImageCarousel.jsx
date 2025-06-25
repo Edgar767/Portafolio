@@ -86,9 +86,8 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
           </div>
         ))}
 
-        {/* Image Counter - En su posición original */}
         {images.length > 1 && (
-          <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-white">
+          <div className="absolute bottom-2 right-2 bg-gray-900/80 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-white">
             {currentIndex + 1} / {images.length}
           </div>
         )}
