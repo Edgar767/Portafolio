@@ -44,6 +44,25 @@ const CardModal = ({
     };
   }, [isModalOpen]);
 
+  // Cerrar modal con tecla Escape
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && isModalOpen) {
+        handleCloseModal();
+      }
+    };
+
+    // Agregar el event listener cuando el modal está abierto
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    // Cleanup: remover el event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isModalOpen]);
+
   // Obtener la primera imagen para mostrar en la tarjeta
   const primeraImagen = imagenes && imagenes.length > 0 ? imagenes[0] : null;
 
