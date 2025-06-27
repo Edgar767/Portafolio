@@ -62,23 +62,39 @@ const CardModal = ({
         className="max-w-sm rounded overflow-hidden bg-gray-900/30 border border-gray-600/30
                 shadow-lg shadow-black/30 hover:shadow-xl bg-opacity-60 backdrop-blur-md cursor-pointer"
         onClick={handleCardClick}
-        layoutId="expandable-card"
+        layoutId={`expandable-card-${titulo}`} // Hacer layoutId único
+        style={{ 
+          willChange: 'transform', // Optimización para animaciones
+          transform: 'translateZ(0)' // Forzar GPU acceleration
+        }}
       >
         {primeraImagen && (
           <motion.img 
-            layoutId="card-image"
+            layoutId={`card-image-${titulo}`} // Hacer layoutId único
             className="w-full h-48 object-cover" 
             src={primeraImagen.url} 
-            alt={primeraImagen.alt || titulo} 
+            alt={primeraImagen.alt || titulo}
+            style={{ 
+              willChange: 'transform',
+              transform: 'translateZ(0)'
+            }}
           />
         )}
         <motion.div 
-          layoutId="card-content"
+          layoutId={`card-content-${titulo}`} // Hacer layoutId único
           className="px-6 py-4"
+          style={{ 
+            willChange: 'transform',
+            transform: 'translateZ(0)'
+          }}
         >
           <motion.div 
-            layoutId="card-title"
+            layoutId={`card-title-${titulo}`} // Hacer layoutId único
             className="font-Goldman text-white text-4xl mb-2 m-2"
+            style={{ 
+              willChange: 'transform',
+              transform: 'translateZ(0)'
+            }}
           >
             {titulo}
           </motion.div>
@@ -86,7 +102,7 @@ const CardModal = ({
       </motion.div>
 
       {/* Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait"> {/* Evitar animaciones simultáneas */}
         {isModalOpen && (
           <>
             <motion.div 
@@ -95,23 +111,47 @@ const CardModal = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleCloseModal}
+              style={{ 
+                willChange: 'opacity',
+                backfaceVisibility: 'hidden'
+              }}
             />
             
             <motion.div
-              layoutId="expandable-card"
+              layoutId={`expandable-card-${titulo}`} // Usar el mismo layoutId único
               className="fixed inset-0 flex justify-center items-center pointer-events-none"
-              style={{ zIndex: 50 }}
+              style={{ 
+                zIndex: 50,
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
             >
               <motion.div
                 className="bg-gray-900/30 border border-gray-600/30 shadow-lg shadow-black/30 p-8 rounded-lg max-w-7xl w-full h-[90vh] flex relative pointer-events-auto bg-opacity-60 backdrop-blur-md text-white"
                 onClick={(e) => e.stopPropagation()}
+                style={{ 
+                  willChange: 'transform',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden'
+                }}
               >
                 <motion.div 
-                  layoutId="card-image-container"
+                  layoutId={`card-image-container-${titulo}`} // Hacer layoutId único
                   className="w-3/5 mr-8 flex items-center"
+                  style={{ 
+                    willChange: 'transform',
+                    transform: 'translateZ(0)'
+                  }}
                 >
                   {imagenes && imagenes.length > 0 ? (
-                    <motion.div layoutId="card-image" className="w-full h-96">
+                    <motion.div 
+                      layoutId={`card-image-${titulo}`} // Usar el mismo layoutId único
+                      className="w-full h-96"
+                      style={{ 
+                        willChange: 'transform',
+                        transform: 'translateZ(0)'
+                      }}
+                    >
                       <ImageCarousel 
                         images={imagenes}
                         autoPlay={true}
@@ -126,21 +166,35 @@ const CardModal = ({
                   )}
                 </motion.div>
 
-                <motion.div className="w-2/4 flex flex-col h-full">
+                <motion.div 
+                  className="w-2/4 flex flex-col h-full"
+                  style={{ 
+                    willChange: 'transform',
+                    transform: 'translateZ(0)'
+                  }}
+                >
                   <div className="flex-1 flex flex-col justify-center">
                     <motion.h2 
-                      layoutId="card-title"
+                      layoutId={`card-title-${titulo}`} // Usar el mismo layoutId único
                       className="text-4xl font-bold mb-6 text-white"
+                      style={{ 
+                        willChange: 'transform',
+                        transform: 'translateZ(0)'
+                      }}
                     >
                       {titulo}
                     </motion.h2>
                     <motion.p 
-                      layoutId="card-description"
+                      layoutId={`card-description-${titulo}`} // Hacer layoutId único
                       className="text-xl mb-8 text-gray-300 leading-relaxed"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ delay: 0.3 }}
+                      style={{ 
+                        willChange: 'opacity',
+                        transform: 'translateZ(0)'
+                      }}
                     >
                       {descripcion}
                     </motion.p>
@@ -153,6 +207,10 @@ const CardModal = ({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ delay: 0.4 }}
+                      style={{ 
+                        willChange: 'transform, opacity',
+                        transform: 'translateZ(0)'
+                      }}
                     >
                       {githubUrl && (
                         <motion.a
@@ -161,6 +219,10 @@ const CardModal = ({
                           rel="noopener noreferrer"
                           className="flex items-center gap-3 border border-gray-700/50 px-6 py-3 rounded-full backdrop-blur-sm hover:bg-gray-800/70 transition-all duration-300"
                           whileTap={{ scale: 0.95 }}
+                          style={{ 
+                            willChange: 'transform',
+                            transform: 'translateZ(0)'
+                          }}
                         >
                           <svg 
                             className="w-5 h-5 text-white" 
@@ -185,6 +247,10 @@ const CardModal = ({
                           whileTap={{ scale: 0.95 }}
                           whileHover={{ 
                             boxShadow: "0 0 40px rgba(99, 102, 241, 0.6), 0 0 80px rgba(99, 102, 241, 0.3)"
+                          }}
+                          style={{ 
+                            willChange: 'transform',
+                            transform: 'translateZ(0)'
                           }}
                         >
                           <svg 
@@ -220,6 +286,10 @@ const CardModal = ({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.2 }}
+                  style={{ 
+                    willChange: 'opacity',
+                    transform: 'translateZ(0)'
+                  }}
                 >
                   &times;
                 </motion.button>
