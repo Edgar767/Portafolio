@@ -1,5 +1,5 @@
 import React from 'react';
-import CardModal from '../components/Cards/CardModal';
+import CardxModal from '../components/Cards/CardxModal';
 import Robotools from '../assets/images/robotools.png';
 import FLStudio from '../assets/images/fl.png';
 import React_Logo from '../assets/Logos/react_logo.svg';
@@ -18,7 +18,7 @@ const Proyectos = () => {
           Proyectos
         </h1>
 
-        <CardModal
+        <CardxModal
           imagenes={[
             { url: FLStudio, alt: "Vista principal del proyecto" },
             { url: Robotools, alt: "Detalle de la interfaz" },
