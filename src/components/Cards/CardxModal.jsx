@@ -26,6 +26,7 @@ const CardxModal = ({
         imagenes={imagenes}
         titulo={titulo}
         onCardClick={handleCardClick}
+        isModalOpen={isModalOpen}
       />
       
       <Modal
