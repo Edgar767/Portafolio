@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const Card = ({ 
@@ -11,42 +11,67 @@ const Card = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [shouldHide, setShouldHide] = useState(false);
+  
+  // Refs para manejar timeouts
+  const hideTimeoutRef = useRef(null);
+  const clickTimeoutRef = useRef(null);
+
+  // Limpiar timeouts al desmontar
+  useEffect(() => {
+    return () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Efecto para manejar cuándo ocultar la card
-  React.useEffect(() => {
+  useEffect(() => {
+    // Limpiar timeout anterior si existe
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+
     if (isModalOpen) {
       // Ocultar después de que comience la animación de apertura
-      const timer = setTimeout(() => {
+      hideTimeoutRef.current = setTimeout(() => {
         setShouldHide(true);
       }, 200);
-      return () => clearTimeout(timer);
     } else {
       // Mostrar inmediatamente cuando se cierra el modal
       setShouldHide(false);
+      
+      // Resetear el estado de click después de que la modal se haya cerrado completamente
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+      clickTimeoutRef.current = setTimeout(() => {
+        setIsClicked(false);
+      }, 300); // Reducido y sincronizado con el cierre de la modal
     }
   }, [isModalOpen]);
 
   const handleMouseEnter = () => {
-    if (!isClicked) {
+    if (!isClicked && !isModalOpen) {
       setIsHovered(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (!isClicked) {
+    if (!isClicked && !isModalOpen) {
       setIsHovered(false);
     }
   };
 
   const handleClick = () => {
+    if (isModalOpen) return; // Prevenir clicks múltiples
+    
     setIsClicked(true);
     setIsHovered(false);
     onCardClick();
-    
-    // Resetear el estado después de un delay más largo para asegurar que el modal esté completamente abierto
-    setTimeout(() => {
-      setIsClicked(false);
-    }, 1000);
   };
 
   return (
@@ -67,6 +92,9 @@ const Card = ({
         opacity: shouldHide ? 0 : 1,
         pointerEvents: isModalOpen ? 'none' : 'auto'
       }}
+      // Agregar estas props para evitar re-renderizados innecesarios durante la animación
+      initial={false}
+      animate={!shouldHide}
     >
       <div className="backdrop-blur-md bg-opacity-60 absolute inset-0 rounded"></div>
 

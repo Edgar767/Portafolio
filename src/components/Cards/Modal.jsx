@@ -44,7 +44,13 @@ const Modal = ({
   }, [isOpen, onClose]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence 
+      mode="wait"
+      onExitComplete={() => {
+        // Asegurar que el body se limpie después de la animación de salida
+        document.body.classList.remove('modal-open');
+      }}
+    >
       {isOpen && (
         <>
           <motion.div 
@@ -55,7 +61,8 @@ const Modal = ({
             onClick={onClose}
             style={{ 
               willChange: 'opacity',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
+              zIndex: 49
             }}
           />
           
