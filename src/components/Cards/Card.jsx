@@ -76,7 +76,7 @@ const Card = ({
 
   return (
     <motion.div
-      className="max-w-sm rounded overflow-hidden bg-gray-900/30 border cursor-pointer relative"
+      className="w-full h-full rounded-xl overflow-hidden bg-gray-900/30 border cursor-pointer relative"
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -96,12 +96,12 @@ const Card = ({
       initial={false}
       animate={!shouldHide}
     >
-      <div className="backdrop-blur-md bg-opacity-60 absolute inset-0 rounded"></div>
+      <div className="backdrop-blur-md bg-opacity-60 absolute inset-0 rounded-xl"></div>
 
       {primeraImagen && (
         <motion.img 
           layoutId={`card-image-${titulo}`}
-          className="w-full h-48 object-cover relative z-10" 
+          className="w-full h-full object-cover relative z-10" 
           src={primeraImagen.url} 
           alt={primeraImagen.alt || titulo}
           style={{ 
@@ -111,8 +111,8 @@ const Card = ({
         />
       )}
       
-      {/* Degradado overlay para mejorar legibilidad del texto */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none z-20" />
+      {/* Degradado overlay para mejorar legibilidad */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none z-20 rounded-xl" />
       
       <motion.div 
         layoutId={`card-content-${titulo}`}
@@ -124,7 +124,7 @@ const Card = ({
       >
         <motion.div 
           layoutId={`card-title-${titulo}`}
-          className="font-Goldman text-white text-3xl md:text-4xl font-bold drop-shadow-2xl"
+          className="font-Goldman text-white text-2xl md:text-3xl font-bold drop-shadow-2xl"
           style={{ 
             willChange: 'transform',
             transform: 'translateZ(0)',

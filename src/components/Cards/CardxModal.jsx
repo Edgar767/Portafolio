@@ -21,7 +21,7 @@ const CardxModal = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <Card 
         imagenes={imagenes}
         titulo={titulo}
