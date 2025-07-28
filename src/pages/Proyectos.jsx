@@ -2,15 +2,15 @@ import React from 'react';
 import CardxModal from '../components/Cards/CardxModal';
 import Robotools from '../assets/images/robotools.png';
 import FLStudio from '../assets/images/fl.png';
-import React_Logo from '../assets/Logos/react_logo.svg';
-import Tailwind_Logo from '../assets/Logos/tailwindcss_logo.svg';
-import Framer_Logo from '../assets/Logos/framer_logo.svg';
-import Vitejs_Logo from '../assets/Logos/vitejs_logo.svg';
-import Daisyui_Logo from '../assets/Logos/daisyui_logo.svg';
-import Javascript_Logo from '../assets/Logos/javascript_logo.svg';
-import CSS_Logo from '../assets/Logos/css_logo.svg';
-import NodeJS_Logo from '../assets/Logos/nodejs_logo.svg';
-import MongoDB_Logo from '../assets/Logos/mongodb_logo.svg';
+import React_Logo from '../assets/tecnologias/react_logo.svg';
+import Tailwind_Logo from '../assets/tecnologias/tailwindcss_logo.svg';
+import Framer_Logo from '../assets/tecnologias/framer_logo.svg';
+import Vitejs_Logo from '../assets/tecnologias/vitejs_logo.svg';
+import Daisyui_Logo from '../assets/tecnologias/daisyui_logo.svg';
+import Javascript_Logo from '../assets/tecnologias/javascript_logo.svg';
+import CSS_Logo from '../assets/tecnologias/css_logo.svg';
+import NodeJS_Logo from '../assets/tecnologias/nodejs_logo.svg';
+import MongoDB_Logo from '../assets/tecnologias/mongodb_logo.svg';
 
 const Proyectos = () => {
   // Datos de proyectos
