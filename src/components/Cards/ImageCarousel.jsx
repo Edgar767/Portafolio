@@ -24,11 +24,9 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
 
   useEffect(() => {
     if (autoPlay && images.length > 1) {
-      // Reset any existing timers
       if (timerRef.current) clearTimeout(timerRef.current);
       if (progressRef.current) clearInterval(progressRef.current);
 
-      // Set up progress bar updates
       progressRef.current = setInterval(() => {
         setProgress((prev) => {
           const newProgress = prev + 100 / (interval / 100);
@@ -36,7 +34,6 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
         });
       }, 100);
 
-      // Set up slide transition
       timerRef.current = setTimeout(goToNext, interval);
     }
 
@@ -46,7 +43,6 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
     };
   }, [currentIndex, autoPlay, interval, images.length, goToNext]);
 
-  // Stop autoplay when user interacts
   const handleUserInteraction = (callback) => {
     return (e) => {
       e.stopPropagation();

@@ -13,7 +13,6 @@ const Modal = ({
   githubUrl, 
   externalUrl 
 }) => {
-  // Solo agregar/quitar clase al body
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('modal-open');
@@ -26,7 +25,6 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  // Cerrar modal con tecla Escape
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape' && isOpen) {
@@ -47,7 +45,6 @@ const Modal = ({
     <AnimatePresence 
       mode="wait"
       onExitComplete={() => {
-        // Asegurar que el body se limpie después de la animación de salida
         document.body.classList.remove('modal-open');
       }}
     >
@@ -61,89 +58,54 @@ const Modal = ({
             onClick={onClose}
             style={{ 
               willChange: 'opacity',
-              backfaceVisibility: 'hidden',
               zIndex: 49
             }}
           />
           
           <motion.div
-            layoutId={`expandable-card-${titulo}`}
             className="fixed inset-0 flex justify-center items-center pointer-events-none"
             style={{ 
               zIndex: 50,
-              willChange: 'transform',
-              transform: 'translateZ(0)'
             }}
           >
             <motion.div
               className="bg-gray-900/30 border border-gray-600/30 shadow-lg shadow-black/30 p-8 rounded-lg max-w-7xl w-full h-[90vh] flex relative pointer-events-auto bg-opacity-60 backdrop-blur-md text-white"
               onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               style={{ 
-                willChange: 'transform',
-                transform: 'translateZ(0)',
-                backfaceVisibility: 'hidden'
+                willChange: 'transform, opacity',
               }}
             >
-              <motion.div 
-                layoutId={`card-image-container-${titulo}`}
-                className="w-3/5 mr-8 flex items-center"
-                style={{ 
-                  willChange: 'transform',
-                  transform: 'translateZ(0)'
-                }}
-              >
+              <div className="w-3/5 mr-8 flex items-center">
                 {imagenes && imagenes.length > 0 ? (
-                  <motion.div 
-                    layoutId={`card-image-${titulo}`}
-                    className="w-full h-96"
-                    style={{ 
-                      willChange: 'transform',
-                      transform: 'translateZ(0)'
-                    }}
-                  >
+                  <div className="w-full h-96">
                     <ImageCarousel 
                       images={imagenes}
                       autoPlay={true}
                       interval={4000}
                       className="h-full rounded-lg overflow-hidden"
                     />
-                  </motion.div>
+                  </div>
                 ) : (
                   <div className="w-full h-96 bg-gray-800/50 rounded-lg flex items-center justify-center">
                     <p className="text-gray-400">No hay imágenes disponibles</p>
                   </div>
                 )}
-              </motion.div>
+              </div>
 
-              <motion.div 
-                className="w-2/4 flex flex-col h-full"
-                style={{ 
-                  willChange: 'transform',
-                  transform: 'translateZ(0)'
-                }}
-              >
+              <div className="w-2/4 flex flex-col h-full">
                 <div className="flex-1 flex flex-col justify-center">
-                  <motion.h2 
-                    layoutId={`card-title-${titulo}`}
-                    className="text-4xl font-bold mb-6 text-white"
-                    style={{ 
-                      willChange: 'transform',
-                      transform: 'translateZ(0)'
-                    }}
-                  >
+                  <h2 className="text-4xl font-bold mb-6 text-white">
                     {titulo}
-                  </motion.h2>
+                  </h2>
                   <motion.p 
-                    layoutId={`card-description-${titulo}`}
                     className="text-xl mb-8 text-gray-300 leading-relaxed"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
                     transition={{ delay: 0.3 }}
-                    style={{ 
-                      willChange: 'opacity',
-                      transform: 'translateZ(0)'
-                    }}
                   >
                     {descripcion}
                   </motion.p>
@@ -154,12 +116,7 @@ const Modal = ({
                     className="flex gap-4 justify-center mb-8"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
                     transition={{ delay: 0.4 }}
-                    style={{ 
-                      willChange: 'transform, opacity',
-                      transform: 'translateZ(0)'
-                    }}
                   >
                     {githubUrl && (
                       <motion.a
@@ -168,10 +125,6 @@ const Modal = ({
                         rel="noopener noreferrer"
                         className="flex items-center gap-3 border border-gray-700/50 px-6 py-3 rounded-full backdrop-blur-sm hover:bg-gray-800/70 transition-all duration-300"
                         whileTap={{ scale: 0.95 }}
-                        style={{ 
-                          willChange: 'transform',
-                          transform: 'translateZ(0)'
-                        }}
                       >
                         <svg 
                           className="w-5 h-5 text-white" 
@@ -196,10 +149,6 @@ const Modal = ({
                         whileTap={{ scale: 0.95 }}
                         whileHover={{ 
                           boxShadow: "0 0 40px rgba(99, 102, 241, 0.6), 0 0 80px rgba(99, 102, 241, 0.3)"
-                        }}
-                        style={{ 
-                          willChange: 'transform',
-                          transform: 'translateZ(0)'
                         }}
                       >
                         <svg 
@@ -226,19 +175,14 @@ const Modal = ({
                     <TechCarousel tecnologias={tecnologias} />
                   </div>
                 )}
-              </motion.div>
+              </div>
 
               <motion.button
                 className="absolute top-1 right-4 text-5xl text-gray-400 hover:text-white transition-colors"
                 onClick={onClose}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
                 transition={{ delay: 0.2 }}
-                style={{ 
-                  willChange: 'opacity',
-                  transform: 'translateZ(0)'
-                }}
               >
                 &times;
               </motion.button>
