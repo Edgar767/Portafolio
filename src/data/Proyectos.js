@@ -12,12 +12,13 @@ import NodeJS_Logo from '../assets/tecnologias/nodejs_logo.svg';
 import MongoDB_Logo from '../assets/tecnologias/mongodb_logo.svg';
 
 export const proyectosData = [
-  // Proyecto 1: Grande (2x2)
   {
+    // Proyecto 1:
     id: 1,
     imagenes: [
       { url: FLStudio, alt: "Vista principal del proyecto" },
       { url: Robotools, alt: "Detalle de la interfaz" },
+      { url: FLStudio, alt: "Vista principal del proyecto" },
     ],
     titulo: "Robotools",
     descripcion: "Herramientas avanzadas para automatización de procesos utilizando IA. Integra múltiples APIs para optimizar flujos de trabajo complejos con una interfaz intuitiva y paneles de control personalizables.",
@@ -31,10 +32,12 @@ export const proyectosData = [
       { nombre: "Framer Motion", logo: Framer_Logo }
     ]
   },
-  // Proyecto 2: Horizontal (2x1)
+  // Proyecto 2:
   {
     id: 2,
     imagenes: [
+      { url: Robotools, alt: "Vista móvil" },
+      { url: FLStudio, alt: "Vista principal del proyecto" },
       { url: Robotools, alt: "Vista móvil" },
     ],
     titulo: "AudioLab",
@@ -47,10 +50,12 @@ export const proyectosData = [
       { nombre: "Firebase", logo: Vitejs_Logo }
     ]
   },
-  // Proyecto 3: Cuadrado (1x1)
+  // Proyecto 3:
   {
     id: 3,
     imagenes: [
+      { url: FLStudio, alt: "Interfaz de usuario" },
+      { url: Robotools, alt: "Vista móvil" },
       { url: FLStudio, alt: "Interfaz de usuario" },
     ],
     titulo: "DesignHub",
@@ -63,10 +68,12 @@ export const proyectosData = [
       { nombre: "Framer Motion", logo: Framer_Logo }
     ]
   },
-  // Proyecto 4: Vertical (1x2) - Tamaño mediano
+  // Proyecto 4:
   {
     id: 4,
     imagenes: [
+      { url: Robotools, alt: "Sistema de análisis" },
+      { url: FLStudio, alt: "Interfaz de usuario" },
       { url: Robotools, alt: "Sistema de análisis" },
     ],
     titulo: "DataViz",
@@ -79,10 +86,12 @@ export const proyectosData = [
       { nombre: "Tailwind CSS", logo: Tailwind_Logo }
     ]
   },
-  // Proyecto 5: Cuadrado (1x1)
+  // Proyecto 5:
   {
     id: 5,
     imagenes: [
+      { url: FLStudio, alt: "Panel de control" },
+      { url: Robotools, alt: "Vista de configuración" },
       { url: FLStudio, alt: "Panel de control" },
     ],
     titulo: "CloudSync",
@@ -95,10 +104,12 @@ export const proyectosData = [
       { nombre: "React", logo: React_Logo }
     ]
   },
-  // Proyecto 6: Horizontal (2x1)
+  // Proyecto 6:
   {
     id: 6,
     imagenes: [
+      { url: Robotools, alt: "Sistema de monitoreo" },
+      { url: FLStudio, alt: "Interfaz de usuario" },
       { url: Robotools, alt: "Sistema de monitoreo" },
     ],
     titulo: "HealthTrack",
@@ -111,10 +122,12 @@ export const proyectosData = [
       { nombre: "Chart.js", logo: Javascript_Logo }
     ]
   },
-  // Proyecto 7: Vertical (1x2) - Tamaño mediano
+  // Proyecto 7:
   {
     id: 7,
     imagenes: [
+      { url: FLStudio, alt: "Interfaz de gestión" },
+      { url: Robotools, alt: "Vista de tareas" },
       { url: FLStudio, alt: "Interfaz de gestión" },
     ],
     titulo: "TaskFlow",
@@ -127,10 +140,12 @@ export const proyectosData = [
       { nombre: "Tailwind CSS", logo: Tailwind_Logo }
     ]
   },
-  // Proyecto 8: Vertical (1x2) - Mismo tamaño que TaskFlow
+  // Proyecto 8:
   {
     id: 8,
     imagenes: [
+      { url: Robotools, alt: "Sistema educativo" },
+      { url: FLStudio, alt: "Interfaz de usuario" },
       { url: Robotools, alt: "Sistema educativo" },
     ],
     titulo: "EduLearn",
@@ -143,11 +158,14 @@ export const proyectosData = [
       { nombre: "Tailwind CSS", logo: Tailwind_Logo }
     ]
   },
-  // Proyecto 9: Grande (2x2)
+  // Proyecto 9:
   {
     id: 9,
     imagenes: [
       { url: FLStudio, alt: "Ecosistema de IA" },
+      { url: Robotools, alt: "Interfaz de usuario" },
+      { url: FLStudio, alt: "Ecosistema de IA" },
+      { url: Robotools, alt: "Interfaz de usuario" },
     ],
     titulo: "AI Nexus",
     descripcion: "Plataforma unificada para desarrollo de inteligencia artificial. Integra múltiples modelos de IA en un solo lugar con herramientas de despliegue, monitoreo y optimización para desarrolladores e investigadores.",
