@@ -10,10 +10,10 @@ const Proyectos = () => {
           Proyectos
         </h1>
 
-        {/* Contenedor Bento Grid - 9 proyectos con tamaños personalizados */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full">
-          {/* Proyecto 1: Grande (2x2) */}
-          <div className="md:col-span-2 md:row-span-2">
+        {/* Contenedor Bento Grid con el nuevo diseño de 10x11 */}
+        <div className="grid grid-cols-10 grid-rows-11 gap-2 md:gap-4 w-full">
+          {/* Proyecto 1: div1 */}
+          <div className="col-span-3 row-span-3">
             <CardxModal
               imagenes={proyectosData[0].imagenes}
               titulo={proyectosData[0].titulo}
@@ -24,8 +24,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 2: Horizontal (2x1) */}
-          <div className="md:col-span-2">
+          {/* Proyecto 2: div2 */}
+          <div className="col-span-4 row-span-4 col-start-4">
             <CardxModal
               imagenes={proyectosData[1].imagenes}
               titulo={proyectosData[1].titulo}
@@ -36,8 +36,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 3: Cuadrado (1x1) */}
-          <div className="md:col-span-1">
+          {/* Proyecto 3: div3 */}
+          <div className="col-span-3 row-span-2 col-start-8">
             <CardxModal
               imagenes={proyectosData[2].imagenes}
               titulo={proyectosData[2].titulo}
@@ -48,8 +48,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 4: Vertical (1x2) - Tamaño mediano */}
-          <div className="md:col-span-1 md:row-span-2">
+          {/* Proyecto 4: div4 */}
+          <div className="col-span-3 row-span-3 col-start-8 row-start-3">
             <CardxModal
               imagenes={proyectosData[3].imagenes}
               titulo={proyectosData[3].titulo}
@@ -60,8 +60,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 5: Cuadrado (1x1) */}
-          <div className="md:col-span-1">
+          {/* Proyecto 5: div5 */}
+          <div className="col-span-3 row-span-4 row-start-4">
             <CardxModal
               imagenes={proyectosData[4].imagenes}
               titulo={proyectosData[4].titulo}
@@ -72,8 +72,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 6: Horizontal (2x1) */}
-          <div className="md:col-span-2">
+          {/* Proyecto 6: div6 */}
+          <div className="col-span-4 row-span-3 col-start-4 row-start-5">
             <CardxModal
               imagenes={proyectosData[5].imagenes}
               titulo={proyectosData[5].titulo}
@@ -84,8 +84,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 7: Vertical (1x2) - Tamaño mediano */}
-          <div className="md:col-span-1 md:row-span-2">
+          {/* Proyecto 7: div7 */}
+          <div className="col-span-3 row-span-6 col-start-8 row-start-6">
             <CardxModal
               imagenes={proyectosData[6].imagenes}
               titulo={proyectosData[6].titulo}
@@ -96,8 +96,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 8: Vertical (1x2) - Mismo tamaño que TaskFlow */}
-          <div className="md:col-span-1 md:row-span-2">
+          {/* Proyecto 8: div8 */}
+          <div className="col-span-2 row-span-4 row-start-8">
             <CardxModal
               imagenes={proyectosData[7].imagenes}
               titulo={proyectosData[7].titulo}
@@ -108,8 +108,8 @@ const Proyectos = () => {
             />
           </div>
           
-          {/* Proyecto 9: Grande (2x2) */}
-          <div className="md:col-span-2 md:row-span-2">
+          {/* Proyecto 9: div9 */}
+          <div className="col-span-5 row-span-4 col-start-3 row-start-8">
             <CardxModal
               imagenes={proyectosData[8].imagenes}
               titulo={proyectosData[8].titulo}
