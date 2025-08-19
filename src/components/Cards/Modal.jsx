@@ -13,19 +13,6 @@ const Modal = ({
   githubUrl, 
   externalUrl 
 }) => {
-  // Solo agregar/quitar clase al body
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.classList.remove('modal-open');
-    }
-
-    return () => {
-      document.body.classList.remove('modal-open');
-    };
-  }, [isOpen]);
-
   // Cerrar modal con tecla Escape
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -35,6 +22,7 @@ const Modal = ({
     };
 
     if (isOpen) {
+      document.body.classList.add('modal-open');
       document.addEventListener('keydown', handleKeyDown);
     }
 
@@ -53,6 +41,7 @@ const Modal = ({
     >
       {isOpen && (
         <>
+          {/* Backdrop */}
           <motion.div 
             className="fixed inset-0 bg-black/50" 
             initial={{ opacity: 0 }}
@@ -66,8 +55,8 @@ const Modal = ({
             }}
           />
           
+          {/* Modal Container */}
           <motion.div
-            layoutId={`expandable-card-${titulo}`}
             className="fixed inset-0 flex justify-center items-center pointer-events-none"
             style={{ 
               zIndex: 50,
@@ -75,7 +64,9 @@ const Modal = ({
               transform: 'translateZ(0)'
             }}
           >
+            {/* Modal Content */}
             <motion.div
+              layoutId={`expandable-card-${titulo}`}
               className="bg-gray-900/30 border border-gray-600/30 shadow-lg shadow-black/30 p-8 rounded-lg max-w-7xl w-full h-[90vh] flex relative pointer-events-auto bg-opacity-60 backdrop-blur-md text-white"
               onClick={(e) => e.stopPropagation()}
               style={{ 
@@ -84,6 +75,7 @@ const Modal = ({
                 backfaceVisibility: 'hidden'
               }}
             >
+              {/* Image Section */}
               <motion.div 
                 layoutId={`card-image-container-${titulo}`}
                 className="w-3/5 mr-8 flex items-center"
@@ -115,6 +107,7 @@ const Modal = ({
                 )}
               </motion.div>
 
+              {/* Content Section */}
               <motion.div 
                 className="w-2/4 flex flex-col h-full"
                 style={{ 
@@ -149,6 +142,7 @@ const Modal = ({
                   </motion.p>
                 </div>
 
+                {/* Action Buttons */}
                 {(githubUrl || externalUrl) && (
                   <motion.div 
                     className="flex gap-4 justify-center mb-8"
@@ -221,20 +215,30 @@ const Modal = ({
                   </motion.div>
                 )}
 
+                {/* Tech Carousel */}
                 {tecnologias.length > 0 && (
-                  <div className="mt-auto">
+                  <motion.div 
+                    className="mt-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ delay: 0.5 }}
+                  >
                     <TechCarousel tecnologias={tecnologias} />
-                  </div>
+                  </motion.div>
                 )}
               </motion.div>
 
+              {/* Close Button */}
               <motion.button
-                className="absolute top-1 right-4 text-5xl text-gray-400 hover:text-white transition-colors"
+                className="absolute top-1 right-4 text-5xl text-gray-400 hover:text-white transition-colors z-50"
                 onClick={onClose}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: 0.2 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 style={{ 
                   willChange: 'opacity',
                   transform: 'translateZ(0)'
