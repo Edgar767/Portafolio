@@ -10,10 +10,10 @@ const Proyectos = () => {
           Proyectos
         </h1>
 
-        {/* Contenedor Bento Grid con el nuevo diseño de 10x11 */}
-        <div className="grid grid-cols-10 grid-rows-11 gap-2 md:gap-4 w-full">
+        {/* Contenedor Bento Grid con el nuevo diseño de 7x12 */}
+        <div className="grid grid-cols-7 grid-rows-[repeat(12,minmax(0,1fr))] gap-2 md:gap-4 w-full">
           {/* Proyecto 1: div1 */}
-          <div className="col-span-3 row-span-3">
+          <div className="col-span-2 row-span-3">
             <CardxModal
               imagenes={proyectosData[0].imagenes}
               titulo={proyectosData[0].titulo}
@@ -25,7 +25,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 2: div2 */}
-          <div className="col-span-4 row-span-4 col-start-4">
+          <div className="col-span-3 row-span-4 col-start-3">
             <CardxModal
               imagenes={proyectosData[1].imagenes}
               titulo={proyectosData[1].titulo}
@@ -37,7 +37,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 3: div3 */}
-          <div className="col-span-3 row-span-2 col-start-8">
+          <div className="col-span-2 row-span-2 col-start-6">
             <CardxModal
               imagenes={proyectosData[2].imagenes}
               titulo={proyectosData[2].titulo}
@@ -49,7 +49,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 4: div4 */}
-          <div className="col-span-3 row-span-3 col-start-8 row-start-3">
+          <div className="col-span-2 row-span-6 col-start-1 row-start-4">
             <CardxModal
               imagenes={proyectosData[3].imagenes}
               titulo={proyectosData[3].titulo}
@@ -61,7 +61,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 5: div5 */}
-          <div className="col-span-3 row-span-4 row-start-4">
+          <div className="col-span-2 row-span-3 col-start-6 row-start-3">
             <CardxModal
               imagenes={proyectosData[4].imagenes}
               titulo={proyectosData[4].titulo}
@@ -73,7 +73,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 6: div6 */}
-          <div className="col-span-4 row-span-3 col-start-4 row-start-5">
+          <div className="col-span-3 row-span-3 col-start-3 row-start-5">
             <CardxModal
               imagenes={proyectosData[5].imagenes}
               titulo={proyectosData[5].titulo}
@@ -85,7 +85,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 7: div7 */}
-          <div className="col-span-3 row-span-6 col-start-8 row-start-6">
+          <div className="col-span-3 row-span-5 col-start-3 row-start-8">
             <CardxModal
               imagenes={proyectosData[6].imagenes}
               titulo={proyectosData[6].titulo}
@@ -97,7 +97,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 8: div8 */}
-          <div className="col-span-2 row-span-4 row-start-8">
+          <div className="col-span-2 row-span-2 col-start-1 row-start-10">
             <CardxModal
               imagenes={proyectosData[7].imagenes}
               titulo={proyectosData[7].titulo}
@@ -109,7 +109,7 @@ const Proyectos = () => {
           </div>
           
           {/* Proyecto 9: div9 */}
-          <div className="col-span-5 row-span-4 col-start-3 row-start-8">
+          <div className="col-span-2 row-span-6 col-start-6 row-start-6">
             <CardxModal
               imagenes={proyectosData[8].imagenes}
               titulo={proyectosData[8].titulo}
