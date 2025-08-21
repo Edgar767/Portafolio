@@ -24,11 +24,9 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
 
   useEffect(() => {
     if (autoPlay && images.length > 1) {
-      // Reset any existing timers
       if (timerRef.current) clearTimeout(timerRef.current);
       if (progressRef.current) clearInterval(progressRef.current);
 
-      // Set up progress bar updates
       progressRef.current = setInterval(() => {
         setProgress((prev) => {
           const newProgress = prev + 100 / (interval / 100);
@@ -36,7 +34,6 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
         });
       }, 100);
 
-      // Set up slide transition
       timerRef.current = setTimeout(goToNext, interval);
     }
 
@@ -46,7 +43,6 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
     };
   }, [currentIndex, autoPlay, interval, images.length, goToNext]);
 
-  // Stop autoplay when user interacts
   const handleUserInteraction = (callback) => {
     return (e) => {
       e.stopPropagation();
@@ -87,16 +83,16 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
         ))}
 
         {images.length > 1 && (
-          <div className="absolute bottom-2 right-2 bg-gray-900/80 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-white">
+          <div className="absolute bottom-2 right-2 bg-gray-800/50 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-white border border-gray-600/50">
             {currentIndex + 1} / {images.length}
           </div>
         )}
       </div>
 
-      {/* Navigation - Centrado verticalmente en el espacio reservado */}
+      {/* Navigation - Actualizado con estilo similar a TechCarousel */}
       {images.length > 1 && (
         <div className="absolute bottom-0 left-0 right-0 h-1/6 flex items-center justify-center pt-5">
-          <div className="flex items-center gap-3 px-4 py-2 bg-gray-900/80 backdrop-blur-sm rounded-full border border-gray-600/50">
+          <div className="flex items-center gap-3 px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full border border-gray-600/50">
             {/* Previous Arrow */}
             <button
               className="h-6 w-6 p-0 hover:bg-gray-700/50 rounded-full flex items-center justify-center transition-colors"
@@ -106,14 +102,13 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
               <ChevronLeft className="h-3 w-3 text-white" />
             </button>
 
-            {/* Progress Indicators - Centrados verticalmente con las flechas */}
+            {/* Progress Indicators */}
             <div className="flex items-center gap-1.5 w-16 justify-center">
               {Array.from({ length: Math.min(3, images.length) }, (_, i) => {
                 let displayIndex;
                 if (images.length <= 3) {
                   displayIndex = i;
                 } else {
-                  // Para más de 3 imágenes, mostrar ventana deslizante centrada en currentIndex
                   const start = Math.max(0, Math.min(currentIndex - 1, images.length - 3));
                   displayIndex = start + i;
                 }

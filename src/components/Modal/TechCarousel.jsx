@@ -82,7 +82,7 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
       transition={{ delay: 0.3 }}
     >
       <motion.h3 
-        className="text-2xl font-semibold text-white mb-4"
+        className="text-2xl text-center font-semibold text-white mb-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
