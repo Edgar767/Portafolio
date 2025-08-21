@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from './Card';
-import Modal from './Modal';
+import Modal from './Modal/Modal';
 
 const CardxModal = ({ 
   imagenes, 
