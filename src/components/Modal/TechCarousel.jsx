@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
-const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
+const TechCarousel = ({ tecnologias = [] }) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const [totalWidth, setTotalWidth] = useState(0);
   const containerRef = useRef(null);
@@ -15,20 +15,17 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
       if (containerRef.current) {
         setContainerWidth(containerRef.current.offsetWidth);
       }
-      
-      // Calcular el ancho total de una sola copia
       if (itemsRef.current.length > 0 && tecnologias.length > 0) {
         let width = 0;
         for (let i = 0; i < tecnologias.length; i++) {
           if (itemsRef.current[i]) {
             const rect = itemsRef.current[i].getBoundingClientRect();
-            width += rect.width + 12; // 12px es el gap
+            width += rect.width + 12;
           }
         }
         setTotalWidth(width);
       }
     };
-
     updateWidths();
     window.addEventListener('resize', updateWidths);
     return () => window.removeEventListener('resize', updateWidths);
@@ -36,7 +33,7 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
 
   useEffect(() => {
     let animationFrame;
-    const duration = 20000; // Velocidad fija (20 segundos por ciclo)
+    const duration = 20000;
     let lastTimestamp;
 
     const animate = (timestamp) => {
@@ -45,14 +42,14 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
       
       if (containerWidth > 0 && totalWidth > 0) {
         progressRef.current += deltaTime / duration;
-        
-        // Reiniciamos cuando completamos un ciclo
         if (progressRef.current >= 1) {
           progressRef.current -= 1;
         }
-        
         const x = -(progressRef.current * totalWidth);
-        controls.set({ x });
+        // Actualizamos directamente el estilo en lugar de usar controls para evitar error de montaje
+        if (carouselRef.current) {
+          carouselRef.current.style.transform = `translateX(${x}px)`;
+        }
       }
       
       lastTimestamp = timestamp;
@@ -66,11 +63,10 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
         cancelAnimationFrame(animationFrame);
       }
     };
-  }, [controls, containerWidth, totalWidth]); // Eliminamos speed de las dependencias
+  }, [containerWidth, totalWidth]);
 
   if (tecnologias.length === 0) return null;
 
-  // Triplicar las tecnologías para el efecto infinito
   const multipliedTechs = [...tecnologias, ...tecnologias, ...tecnologias];
 
   return (
@@ -98,15 +94,13 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
           WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
         }}
       >
-        <motion.div 
+        <div 
           ref={carouselRef}
-          className="flex gap-3 items-center h-full"
-          animate={controls}
+          className="flex gap-3 items-center h-full will-change-transform"
         >
           {multipliedTechs.map((tech, index) => (
             <div
               ref={el => {
-                // Solo almacenamos refs para la primera copia
                 if (index < tecnologias.length) itemsRef.current[index] = el;
               }}
               key={`${tech.nombre}-${index}`}
@@ -124,7 +118,7 @@ const TechCarousel = ({ tecnologias = [] }) => { // Eliminamos la prop speed
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );
