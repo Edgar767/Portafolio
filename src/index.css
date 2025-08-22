@@ -1,21 +1,33 @@
 @font-face {
   font-family: 'Geo';
-  src: url("./assets/Fonts/Geo-Regular.ttf");
+  src: url("./assets/Fonts/Geo-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Goldman';
-  src: url("./assets/Fonts/Goldman-Regular.ttf");
+  src: url("./assets/Fonts/Goldman-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ZenDots';
-  src: url("./assets/Fonts/ZenDots-Regular.ttf");
+  src: url("./assets/Fonts/ZenDots-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Outfit';
-  src: url("./assets/Fonts/Outfit-Regular.ttf");
+  src: url("./assets/Fonts/Outfit-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @import "tailwindcss";
