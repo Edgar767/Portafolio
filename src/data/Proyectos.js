@@ -1,6 +1,6 @@
 // src/data/proyectos.js
-import Robotools from '../assets/images/robotools.png';
-import FLStudio from '../assets/images/fl.png';
+import Robotools from '../assets/images/robotools.webp';
+import FLStudio from '../assets/images/fl.webp';
 import React_Logo from '../assets/tecnologias/react_logo.svg';
 import Tailwind_Logo from '../assets/tecnologias/tailwindcss_logo.svg';
 import Framer_Logo from '../assets/tecnologias/framer_logo.svg';

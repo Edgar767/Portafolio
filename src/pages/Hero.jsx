@@ -1,5 +1,5 @@
 import React from 'react';
-import Perfil from '../assets/images/perfil.png';
+import Perfil from '../assets/images/perfil.webp';
 
 const Hero = () => {
   return (
