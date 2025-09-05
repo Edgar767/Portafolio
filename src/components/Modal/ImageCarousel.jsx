@@ -177,7 +177,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
       )}
 
       {/* CSS Animation para la barra de progreso */}
-      <style jsx>{`
+      <style>{`
         @keyframes progressBar {
           from {
             transform: scaleX(0);
