@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -133,7 +132,9 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
               onClick={handleUserInteraction(goToPrevious)}
               aria-label="Previous image"
             >
-              <ChevronLeft className="h-3 w-3 text-white" />
+              <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
 
             {/* Progress Indicators */}
@@ -170,7 +171,9 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000, className = "
               onClick={handleUserInteraction(goToNext)}
               aria-label="Next image"
             >
-              <ChevronRight className="h-3 w-3 text-white" />
+              <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
