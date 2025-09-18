@@ -36,7 +36,7 @@ const Modal = ({
     <AnimatePresence 
       mode="wait"
       onExitComplete={() => {
-        // Asegurar que el body se limpie después de la animación de salida
+        // Asegurar que el body se limpie despues de la animacion de salida
         document.body.classList.remove('modal-open');
       }}
     >
@@ -103,7 +103,7 @@ const Modal = ({
                   </motion.div>
                 ) : (
                   <div className="w-full h-96 bg-gray-800/50 rounded-lg flex items-center justify-center">
-                    <p className="text-gray-400">No hay imágenes disponibles</p>
+                    <p className="text-gray-400">No hay imagenes disponibles</p>
                   </div>
                 )}
               </motion.div>
@@ -170,7 +170,6 @@ const Modal = ({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: 0.2 }}
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 style={{ 
                   willChange: 'opacity',
