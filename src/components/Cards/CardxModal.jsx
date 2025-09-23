@@ -2,36 +2,21 @@ import React, { useState } from 'react';
 import Card from './Card';
 import Modal from '../Modal/Modal';
 
-const CardxModal = ({ 
-  imagenes, 
-  titulo, 
-  descripcion, 
-  tecnologias = [], 
-  githubUrl, 
-  externalUrl 
-}) => {
+const CardxModal = ({ imagenes, titulo, descripcion, tecnologias = [], githubUrl, externalUrl }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleCardClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <div className="relative h-full">
-      <Card 
+      <Card
         imagenes={imagenes}
         titulo={titulo}
-        onCardClick={handleCardClick}
+        onCardClick={() => setIsModalOpen(true)}
         isModalOpen={isModalOpen}
       />
-      
+
       <Modal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => setIsModalOpen(false)}
         imagenes={imagenes}
         titulo={titulo}
         descripcion={descripcion}

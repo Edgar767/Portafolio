@@ -4,39 +4,32 @@ import ImageCarousel from './ImageCarousel';
 import TechCarousel from './TechCarousel';
 import ExternalLinks from './ExternalLinks';
 
-// 🔹 Variants reutilizables
-const fadeVariant = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 }
-};
+// Variants reutilizables
+const fadeVariant = { hidden: { opacity: 0 }, visible: { opacity: 1 }, exit: { opacity: 0 } };
+const slideUpVariant = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 20 } };
 
-const slideUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 20 }
-};
-
-const Modal = ({ 
+const Modal = ({
   isOpen,
   onClose,
-  imagenes, 
-  titulo, 
-  descripcion, 
-  tecnologias = [], 
-  githubUrl, 
-  externalUrl 
+  imagenes = [],
+  titulo,
+  descripcion,
+  tecnologias = [],
+  githubUrl,
+  externalUrl
 }) => {
-  // 🔹 Manejar tecla Escape
-  const handleKeyDown = useCallback((event) => {
-    if (event.key === 'Escape') onClose();
-  }, [onClose]);
+  // Cerrar modal con Escape
+  const handleKeyDown = useCallback(
+    (event) => event.key === 'Escape' && onClose(),
+    [onClose]
+  );
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('modal-open');
-      document.addEventListener('keydown', handleKeyDown);
-    }
+    if (!isOpen) return;
+
+    document.body.classList.add('modal-open');
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', handleKeyDown);
@@ -44,16 +37,11 @@ const Modal = ({
   }, [isOpen, handleKeyDown]);
 
   return (
-    <AnimatePresence 
-      mode="wait"
-      onExitComplete={() => {
-        document.body.classList.remove('modal-open');
-      }}
-    >
+    <AnimatePresence mode="wait" onExitComplete={() => document.body.classList.remove('modal-open')}>
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-black/50 z-40"
             variants={fadeVariant}
             initial="hidden"
@@ -64,12 +52,7 @@ const Modal = ({
           />
 
           {/* Modal Container */}
-          <motion.div
-            className="fixed inset-0 flex justify-center items-center z-50"
-            role="dialog"
-            aria-modal="true"
-          >
-            {/* Modal Content */}
+          <motion.div className="fixed inset-0 flex justify-center items-center z-50" role="dialog" aria-modal="true">
             <motion.div
               layoutId={`expandable-card-${titulo}`}
               className="bg-gray-900/30 border border-gray-600/30 shadow-lg shadow-black/30 
@@ -78,22 +61,11 @@ const Modal = ({
                          bg-opacity-60 backdrop-blur-md text-white"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Image Section */}
-              <motion.div 
-                layoutId={`card-image-container-${titulo}`}
-                className="w-full md:w-3/5 md:mr-8 flex items-center mb-6 md:mb-0"
-              >
-                {imagenes?.length > 0 ? (
-                  <motion.div 
-                    layoutId={`card-image-${titulo}`}
-                    className="w-full h-64 md:h-96"
-                  >
-                    <ImageCarousel 
-                      images={imagenes}
-                      autoPlay={true}
-                      interval={4000}
-                      className="h-full rounded-lg overflow-hidden"
-                    />
+              {/* Imagen */}
+              <motion.div layoutId={`card-image-container-${titulo}`} className="w-full md:w-3/5 md:mr-8 flex items-center mb-6 md:mb-0">
+                {imagenes.length > 0 ? (
+                  <motion.div layoutId={`card-image-${titulo}`} className="w-full h-64 md:h-96">
+                    <ImageCarousel images={imagenes} autoPlay interval={4000} className="h-full rounded-lg overflow-hidden" />
                   </motion.div>
                 ) : (
                   <div className="w-full h-64 md:h-96 bg-gray-800/50 rounded-lg flex items-center justify-center">
@@ -102,52 +74,48 @@ const Modal = ({
                 )}
               </motion.div>
 
-              {/* Content Section */}
-              <motion.div 
-                className="w-full md:w-2/4 flex flex-col h-full"
-              >
+              {/* Contenido */}
+              <motion.div className="w-full md:w-2/4 flex flex-col h-full">
                 <div className="flex-1 flex flex-col justify-center">
-                  <motion.h2 
-                    layoutId={`card-title-${titulo}`}
-                    className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-white"
-                  >
+                  <motion.h2 layoutId={`card-title-${titulo}`} className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-white">
                     {titulo}
                   </motion.h2>
 
-                  <motion.p 
+                  <motion.p
                     layoutId={`card-description-${titulo}`}
                     className="text-lg md:text-xl mb-6 md:mb-8 text-gray-300 leading-relaxed"
-                    variants={fadeVariant}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    transition={{ delay: 0.2 }}
-                  >
-                    {descripcion}
-                  </motion.p>
-                </div>
-
-                {/* Action Buttons */}
-                {(githubUrl || externalUrl) && (
-                  <ExternalLinks githubUrl={githubUrl} externalUrl={externalUrl} />
-                )}
-
-                {/* Tech Carousel */}
-                {tecnologias.length > 0 && (
-                  <motion.div 
-                    className="mt-4 md:mt-auto"
                     variants={slideUpVariant}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
                     transition={{ delay: 0.4 }}
                   >
+                    {descripcion}
+                  </motion.p>
+                </div>
+
+                {/* Links */}
+                {(githubUrl || externalUrl) && (
+                  <motion.div
+                    variants={slideUpVariant}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ delay: 0.4 }}
+                  >
+                    <ExternalLinks githubUrl={githubUrl} externalUrl={externalUrl} />
+                  </motion.div>
+                )}
+
+                {/* Tecnologías */}
+                {tecnologias.length > 0 && (
+                  <motion.div className="mt-4 md:mt-auto" variants={slideUpVariant} initial="hidden" animate="visible" exit="exit" transition={{ delay: 0.4 }}>
                     <TechCarousel tecnologias={tecnologias} />
                   </motion.div>
                 )}
               </motion.div>
 
-              {/* Close Button */}
+              {/* Botón Cerrar */}
               <motion.button
                 className="absolute top-2 right-4 text-4xl md:text-5xl text-gray-400 hover:text-white transition-colors"
                 onClick={onClose}

@@ -1,71 +1,65 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 
 const TechCarousel = ({ tecnologias = [] }) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const [totalWidth, setTotalWidth] = useState(0);
+
   const containerRef = useRef(null);
   const carouselRef = useRef(null);
-  const controls = useAnimation();
-  const progressRef = useRef(0);
   const itemsRef = useRef([]);
+  const progressRef = useRef(0);
+
+  // Recalcular anchos cuando cambien tecnologías o ventana
+  const updateWidths = useCallback(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
+
+    if (itemsRef.current.length > 0) {
+      const width = itemsRef.current.reduce((acc, el) => {
+        if (!el) return acc;
+        return acc + el.offsetWidth + 12; // 12 = gap
+      }, 0);
+      setTotalWidth(width);
+    }
+  }, []);
 
   useEffect(() => {
-    const updateWidths = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-      }
-      if (itemsRef.current.length > 0 && tecnologias.length > 0) {
-        let width = 0;
-        for (let i = 0; i < tecnologias.length; i++) {
-          if (itemsRef.current[i]) {
-            const rect = itemsRef.current[i].getBoundingClientRect();
-            width += rect.width + 12;
-          }
-        }
-        setTotalWidth(width);
-      }
-    };
     updateWidths();
-    window.addEventListener('resize', updateWidths);
-    return () => window.removeEventListener('resize', updateWidths);
-  }, [tecnologias]);
+    window.addEventListener("resize", updateWidths);
+    return () => window.removeEventListener("resize", updateWidths);
+  }, [updateWidths]);
 
+  // Animación infinita
   useEffect(() => {
     let animationFrame;
-    const duration = 20000;
+    const duration = 20000; // 20s ciclo completo
     let lastTimestamp;
 
     const animate = (timestamp) => {
       if (!lastTimestamp) lastTimestamp = timestamp;
       const deltaTime = timestamp - lastTimestamp;
-      
+
       if (containerWidth > 0 && totalWidth > 0) {
-        progressRef.current += deltaTime / duration;
-        if (progressRef.current >= 1) {
-          progressRef.current -= 1;
-        }
+        progressRef.current = (progressRef.current + deltaTime / duration) % 1;
         const x = -(progressRef.current * totalWidth);
-        // Actualizamos directamente el estilo en lugar de usar controls para evitar error de montaje
+
         if (carouselRef.current) {
           carouselRef.current.style.transform = `translateX(${x}px)`;
         }
       }
-      
+
       lastTimestamp = timestamp;
       animationFrame = requestAnimationFrame(animate);
     };
 
     animationFrame = requestAnimationFrame(animate);
 
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
+    return () => cancelAnimationFrame(animationFrame);
   }, [containerWidth, totalWidth]);
 
-  if (tecnologias.length === 0) return null;
+  if (!tecnologias.length) return null;
 
   const multipliedTechs = [...tecnologias, ...tecnologias, ...tecnologias];
 
@@ -77,7 +71,7 @@ const TechCarousel = ({ tecnologias = [] }) => {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.3 }}
     >
-      <motion.h3 
+      <motion.h3
         className="text-2xl text-center font-semibold text-white mb-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -85,31 +79,33 @@ const TechCarousel = ({ tecnologias = [] }) => {
       >
         Tecnologías Utilizadas
       </motion.h3>
-      
-      <div 
+
+      <div
         ref={containerRef}
         className="relative overflow-hidden h-14"
-        style={{ 
-          maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
         }}
       >
-        <div 
+        <div
           ref={carouselRef}
           className="flex gap-3 items-center h-full will-change-transform"
         >
           {multipliedTechs.map((tech, index) => (
             <div
-              ref={el => {
+              ref={(el) => {
                 if (index < tecnologias.length) itemsRef.current[index] = el;
               }}
               key={`${tech.nombre}-${index}`}
               className="flex items-center gap-2 bg-gray-800/50 border border-gray-600/50 px-4 py-2 rounded-full backdrop-blur-sm flex-shrink-0"
             >
               {tech.logo && (
-                <img 
-                  src={tech.logo} 
-                  alt={tech.nombre} 
+                <img
+                  src={tech.logo}
+                  alt={tech.nombre}
                   className="w-5 h-5 object-contain"
                 />
               )}
