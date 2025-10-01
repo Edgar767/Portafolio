@@ -12,15 +12,11 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
     if (isModalOpen && isHovered) setIsHovered(false);
   }, [isModalOpen, isHovered]);
 
-  // Estilos dinámicos del contenedor
+  // Estilos dinámicos del contenedor (sin efectos índigo)
   const containerStyle = {
     willChange: 'transform',
     transform: 'translateZ(0)',
-    borderColor: isHovered && !isModalOpen ? 'rgba(79, 70, 229, 0.6)' : 'rgba(156, 163, 175, 0.3)',
-    boxShadow: isHovered && !isModalOpen
-      ? `0 0 0 2px rgba(79, 70, 229, 0.5), 0 0 40px rgba(79, 70, 229, 0.4), 0 0 80px rgba(79, 70, 229, 0.3), 0 0 120px rgba(79, 70, 229, 0.2)`
-      : '0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.06)',
-    transition: isModalOpen ? 'none' : 'border-color 0.6s ease, box-shadow 0.6s ease',
+    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.06)',
     pointerEvents: isModalOpen ? 'none' : 'auto'
   };
 
@@ -32,7 +28,7 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
 
   return (
     <motion.div
-      className="w-full h-full rounded-xl overflow-hidden bg-gray-900/30 border cursor-pointer relative"
+      className="w-full h-full rounded-xl overflow-hidden bg-gray-900/30 border border-gray-400/30 cursor-pointer relative"
       onClick={() => !isModalOpen && onCardClick?.()}
       onMouseEnter={() => !isModalOpen && setIsHovered(true)}
       onMouseLeave={() => !isModalOpen && setIsHovered(false)}
@@ -62,10 +58,24 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
       >
         <motion.div
           layoutId={`card-title-${titulo}`}
-          className="font-Goldman text-white text-2xl md:text-3xl font-bold drop-shadow-2xl"
+          className="font-Goldman text-white text-2xl md:text-3xl font-bold drop-shadow-2xl relative inline-block"
           style={titleStyle}
         >
           {titulo}
+          
+          {/* Barra animada debajo del título */}
+          <motion.div
+            className="absolute bottom-0 left-0 h-1 bg-indigo-500 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: isHovered && !isModalOpen ? '100%' : 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            style={{ 
+              willChange: 'transform, filter', 
+              transform: 'translateZ(0)',
+              top: 'calc(100% + 0px)',
+              filter: 'drop-shadow(0 0 6px rgba(99, 102, 241, 0.8)) drop-shadow(0 0 12px rgba(99, 102, 241, 0.4))'
+            }}
+          />
         </motion.div>
       </motion.div>
     </motion.div>
