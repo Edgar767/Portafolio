@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = false }) => {
@@ -12,28 +12,34 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
     if (isModalOpen && isHovered) setIsHovered(false);
   }, [isModalOpen, isHovered]);
 
-  // Estilos dinámicos del contenedor (sin efectos índigo)
-  const containerStyle = {
-    willChange: 'transform',
-    transform: 'translateZ(0)',
-    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.06)',
-    pointerEvents: isModalOpen ? 'none' : 'auto'
-  };
+  // Memoizar handlers
+  const handleClick = useCallback(() => {
+    if (!isModalOpen && onCardClick) {
+      onCardClick();
+    }
+  }, [isModalOpen, onCardClick]);
 
-  const titleStyle = {
-    willChange: 'transform',
-    transform: 'translateZ(0)',
-    textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 16px rgba(0,0,0,0.6)'
-  };
+  const handleMouseEnter = useCallback(() => {
+    if (!isModalOpen) setIsHovered(true);
+  }, [isModalOpen]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!isModalOpen) setIsHovered(false);
+  }, [isModalOpen]);
 
   return (
     <motion.div
       className="w-full h-full rounded-xl overflow-hidden bg-gray-900/30 border border-gray-400/30 cursor-pointer relative"
-      onClick={() => !isModalOpen && onCardClick?.()}
-      onMouseEnter={() => !isModalOpen && setIsHovered(true)}
-      onMouseLeave={() => !isModalOpen && setIsHovered(false)}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       layoutId={`expandable-card-${titulo}`}
-      style={containerStyle}
+      style={{
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+        pointerEvents: isModalOpen ? 'none' : 'auto'
+      }}
       initial={false}
     >
       {primeraImagen && (
@@ -51,16 +57,8 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none z-20 rounded-xl" />
 
       {/* Contenido */}
-      <motion.div
-        layoutId={`card-content-${titulo}`}
-        className="absolute bottom-0 left-0 right-0 p-4 z-30"
-        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
-      >
-        <motion.div
-          layoutId={`card-title-${titulo}`}
-          className="font-Goldman text-white text-2xl md:text-3xl font-bold drop-shadow-2xl relative inline-block"
-          style={titleStyle}
-        >
+      <div className="absolute bottom-0 left-0 right-0 p-4 z-30">
+        <div className="font-Goldman text-white text-2xl md:text-3xl font-bold drop-shadow-2xl relative inline-block">
           {titulo}
           
           {/* Barra animada debajo del título */}
@@ -70,14 +68,14 @@ const Card = React.memo(({ imagenes = [], titulo, onCardClick, isModalOpen = fal
             animate={{ width: isHovered && !isModalOpen ? '100%' : 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ 
-              willChange: 'transform, filter', 
+              willChange: 'transform', 
               transform: 'translateZ(0)',
               top: 'calc(100% + 0px)',
-              filter: 'drop-shadow(0 0 6px rgba(99, 102, 241, 0.8)) drop-shadow(0 0 12px rgba(99, 102, 241, 0.4))'
+              filter: 'drop-shadow(0 0 6px rgba(99, 102, 241, 0.8))'
             }}
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </motion.div>
   );
 });

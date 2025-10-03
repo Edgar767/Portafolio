@@ -1,14 +1,23 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ImageCarousel from './ImageCarousel';
 import TechCarousel from './TechCarousel';
 import ExternalLinks from './ExternalLinks';
 
 // Variants reutilizables
-const fadeVariant = { hidden: { opacity: 0 }, visible: { opacity: 1 }, exit: { opacity: 0 } };
-const slideUpVariant = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 20 } };
+const fadeVariant = { 
+  hidden: { opacity: 0 }, 
+  visible: { opacity: 1 }, 
+  exit: { opacity: 0 } 
+};
 
-const Modal = ({
+const slideUpVariant = { 
+  hidden: { opacity: 0, y: 20 }, 
+  visible: { opacity: 1, y: 0 }, 
+  exit: { opacity: 0, y: 20 } 
+};
+
+const Modal = React.memo(({
   isOpen,
   onClose,
   imagenes = [],
@@ -18,6 +27,10 @@ const Modal = ({
   githubUrl,
   externalUrl
 }) => {
+  // Memoizar props complejas
+  const memoizedImagenes = useMemo(() => imagenes, [imagenes]);
+  const memoizedTecnologias = useMemo(() => tecnologias, [tecnologias]);
+
   // Cerrar modal con Escape
   const handleKeyDown = useCallback(
     (event) => event.key === 'Escape' && onClose(),
@@ -36,7 +49,8 @@ const Modal = ({
     };
   }, [isOpen, handleKeyDown]);
 
-  return (
+  // Memoizar el contenido del modal
+  const modalContent = useMemo(() => (
     <AnimatePresence mode="wait" onExitComplete={() => document.body.classList.remove('modal-open')}>
       {isOpen && (
         <>
@@ -61,34 +75,40 @@ const Modal = ({
                          bg-opacity-60 backdrop-blur-md text-white"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Imagen */}
-              <motion.div layoutId={`card-image-container-${titulo}`} className="w-full md:w-3/5 md:mr-8 flex items-center mb-6 md:mb-0">
-                {imagenes.length > 0 ? (
+              {/* Imagen - Solo mantener layoutId esencial */}
+              <div className="w-full md:w-3/5 md:mr-8 flex items-center mb-6 md:mb-0">
+                {memoizedImagenes.length > 0 ? (
                   <motion.div layoutId={`card-image-${titulo}`} className="w-full h-64 md:h-96">
-                    <ImageCarousel images={imagenes} autoPlay interval={4000} className="h-full rounded-lg overflow-hidden" />
+                    <ImageCarousel images={memoizedImagenes} autoPlay interval={4000} className="h-full rounded-lg overflow-hidden" />
                   </motion.div>
                 ) : (
                   <div className="w-full h-64 md:h-96 bg-gray-800/50 rounded-lg flex items-center justify-center">
                     <p className="text-gray-400">No hay imágenes disponibles</p>
                   </div>
                 )}
-              </motion.div>
+              </div>
 
-              {/* Contenido */}
-              <motion.div className="w-full md:w-2/4 flex flex-col h-full">
+              {/* Contenido - Sin layoutId */}
+              <div className="w-full md:w-2/4 flex flex-col h-full">
                 <div className="flex-1 flex flex-col justify-center">
-                  <motion.h2 layoutId={`card-title-${titulo}`} className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-white">
+                  <motion.h2 
+                    className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-white"
+                    variants={slideUpVariant}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ delay: 0.2 }}
+                  >
                     {titulo}
                   </motion.h2>
 
                   <motion.p
-                    layoutId={`card-description-${titulo}`}
                     className="text-lg md:text-xl mb-6 md:mb-8 text-gray-300 leading-relaxed"
                     variants={slideUpVariant}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    transition={{ delay: 0.4 }}
+                    transition={{ delay: 0.3 }}
                   >
                     {descripcion}
                   </motion.p>
@@ -108,12 +128,19 @@ const Modal = ({
                 )}
 
                 {/* Tecnologías */}
-                {tecnologias.length > 0 && (
-                  <motion.div className="mt-4 md:mt-auto" variants={slideUpVariant} initial="hidden" animate="visible" exit="exit" transition={{ delay: 0.4 }}>
-                    <TechCarousel tecnologias={tecnologias} />
+                {memoizedTecnologias.length > 0 && (
+                  <motion.div 
+                    className="mt-4 md:mt-auto" 
+                    variants={slideUpVariant} 
+                    initial="hidden" 
+                    animate="visible" 
+                    exit="exit" 
+                    transition={{ delay: 0.4 }}
+                  >
+                    <TechCarousel tecnologias={memoizedTecnologias} />
                   </motion.div>
                 )}
-              </motion.div>
+              </div>
 
               {/* Botón Cerrar */}
               <motion.button
@@ -134,7 +161,9 @@ const Modal = ({
         </>
       )}
     </AnimatePresence>
-  );
-};
+  ), [isOpen, onClose, memoizedImagenes, titulo, descripcion, memoizedTecnologias, githubUrl, externalUrl]);
+
+  return modalContent;
+});
 
 export default Modal;
