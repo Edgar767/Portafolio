@@ -1,4 +1,5 @@
 import React from 'react';
+import Perfil from '../assets/images/perfil.webp';
 
 const Hero = () => {
   return (
@@ -6,10 +7,10 @@ const Hero = () => {
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-center gap-12 md:gap-24">
         {/* Texto directo sin contenedor */}
         <div className="text-center md:text-left max-w-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-Goldman text-white mb-4 leading-tight">
             Hola, Soy <span className="text-indigo-500">Edgar</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed">
+          <p className="text-lg md:text-xl font-ZenDots text-white/70 leading-relaxed">
           Desarrollador web frontend. Diseño y construyo interfaces modernas, optimizadas y funcionales para la mejor experiencia de usuario.
           </p>
         </div>
@@ -17,7 +18,7 @@ const Hero = () => {
         {/* Imagen limpia sin efectos de hover */}
         <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-indigo-500">
           <img 
-            src="/images/perfil.png"
+            src={Perfil}
             alt="Edgar Desarrollador Front End" 
             className="w-full h-full object-cover object-center"
             loading="lazy"

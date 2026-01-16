@@ -27,7 +27,25 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [bodyHasModal, setBodyHasModal] = useState(false);
   const navRef = useRef(null);
+
+  // Observar cambios en la clase del body
+  useEffect(() => {
+    const checkBodyClass = () => {
+      setBodyHasModal(document.body.classList.contains('modal-open'));
+    };
+
+    checkBodyClass();
+    
+    const observer = new MutationObserver(checkBodyClass);
+    observer.observe(document.body, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,25 +64,22 @@ const Navbar = () => {
 
   useEffect(() => {
     const controlNavbar = () => {
+      if (bodyHasModal) return;
+      
       const currentScrollY = window.scrollY;
       
-      // Make navbar visible when scrolling up
       if (currentScrollY < lastScrollY) {
         setIsVisible(true);
-        // Apply a small delay before any hiding to ensure rendering is complete
         setTimeout(() => {
           if (navRef.current) {
-            // Force a repaint to ensure text renders clearly
             navRef.current.style.filter = 'blur(0)';
           }
         }, 50);
       } 
-      // Hide navbar when scrolling down and not at the top
       else if (currentScrollY > lastScrollY && currentScrollY > 50) {
         setIsVisible(false);
       }
       
-      // Keep the navbar visible if menu is open on mobile
       if (isMenuOpen) {
         setIsVisible(true);
       }
@@ -74,11 +89,10 @@ const Navbar = () => {
     
     window.addEventListener('scroll', controlNavbar);
     
-    // Cleanup
     return () => {
       window.removeEventListener('scroll', controlNavbar);
     };
-  }, [lastScrollY, isMenuOpen]);
+  }, [lastScrollY, isMenuOpen, bodyHasModal]);
 
   const handleMouseMove = (e) => {
     if (!navRef.current) return;
@@ -98,10 +112,8 @@ const Navbar = () => {
     setIsHovered(isNear);
   };
   
-  // Force render clarity when navbar becomes visible
   useEffect(() => {
     if (isVisible && navRef.current) {
-      // Force a reflow to ensure proper rendering
       navRef.current.style.transform = 'translateZ(0)';
     }
   }, [isVisible]);
@@ -113,13 +125,13 @@ const Navbar = () => {
                 backdrop-blur-lg bg-gray-900/30 border border-gray-600/30
                 shadow-lg shadow-black/30 hover:shadow-xl
                 max-w-3xl md:min-w-[500px] w-[calc(100%-2rem)] md:w-fit overflow-hidden
-                transition-all duration-500 ease-in-out ${isVisible 
+                transition-all duration-500 ease-in-out 
+                ${(isVisible && !bodyHasModal) 
                   ? 'opacity-100 translate-y-0 md:scale-x-100 backdrop-blur-lg' 
                   : 'opacity-0 -translate-y-full md:scale-x-50 md:origin-center backdrop-blur-none'}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Efecto Glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div 
           className="absolute h-32 w-32 -translate-x-1/2 -translate-y-1/2 
@@ -133,7 +145,6 @@ const Navbar = () => {
       </div>
 
       <div className="relative mx-auto px-6 py-6 flex justify-center items-center">
-        {/* Botón Hamburguesa a la izquierda */}
         <div className="md:hidden absolute left-4">
           <button
             className="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/30 transition-colors"
@@ -150,12 +161,10 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Logo a la derecha */}
         <div className="md:hidden absolute right-4">
           <span className="text-white font-bold text-xl tracking-tighter">&lt;/&gt;</span>
         </div>
 
-        {/* Menú Desktop */}
         <ul className="hidden md:flex justify-center space-x-8">
           {menuItems.map((item) => (
             <li key={item.name}>
@@ -178,7 +187,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Menú Móvil */}
       <div className={`md:hidden border-t border-gray-600/30 w-full transition-all duration-300 ease-in-out 
         ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}
         onClick={() => setIsVisible(true)}>
